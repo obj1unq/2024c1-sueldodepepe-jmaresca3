@@ -6,6 +6,9 @@ object pepe {
 	method sueldo(){	
 		return self.neto() + bonoResultados.valor(self) + bonoPresentismo.valor(self)
 	}
+	method neto(){
+		return categoria.neto()
+	}
 	method categoria(_categoria){
 		categoria = _categoria
 	}
@@ -15,11 +18,59 @@ object pepe {
 	method bonoPresentismoEs(_bonoPresentismo){
 		bonoPresentismo = _bonoPresentismo
 	}
+	method faltas(_faltas){
+		faltas += _faltas
+	}
+	method faltas(){
+		return faltas
+	}
+}
+
+object sofia {
+	var categoria = cadete
+	var bonoResultados = nulo
+	method sueldo(){
+		return self.neto() + bonoResultados.valor(self) + self.netoIncrementado()
+	}
 	method neto(){
 		return categoria.neto()
 	}
-	method faltas(_faltas){
-		faltas += _faltas
+	method categoria(_categoria){
+		categoria = _categoria
+	}
+	method bonoResultadosEs(_bonoResultados){
+		bonoResultados = _bonoResultados
+	}
+	method netoIncrementado(){
+		return self.neto()*0.3
+	}
+}
+
+object roque {
+	var bonoResultados = nulo
+	method sueldo(){
+		return self.neto() + bonoResultados.valor(self) + 9000
+	}
+	method bonoResultadosEs(_bonoResultados){
+		bonoResultados = _bonoResultados
+	}
+	method neto(){
+		return 28000
+	}
+}
+
+object ernesto {
+	var companiero = pepe 
+	var bonoPresentismo = normal
+	const faltas = 0
+	method sueldo(){
+		return companiero.neto() + bonoPresentismo.valor(self)
+	}
+	method companieroEs(_companiero){
+		companiero = _companiero 
+	}
+	method bonoPresentismoEs(_bonoPresentismo){
+		bonoPresentismo = _bonoPresentismo
 	}
 	method faltas(){
 		return faltas
@@ -37,6 +88,33 @@ object cadete {
 object gerente {
 	method neto(){
 		return 15000
+	}
+}
+
+object vendedor {
+	var netoBase = 16000
+	var muchasVentas = false
+	method neto(){
+		return netoBase + self.incrementoPorVentas()
+	}
+	method incrementoPorVentas(){
+		return if(muchasVentas) netoBase*0.25 else 0 
+	}
+	method activarAumentoPorMuchasVentas(){
+		muchasVentas = true
+	}
+	method desactivarAumentoPorMuchasVentas(){
+		muchasVentas = false
+	}
+}
+
+object medioTiempo {
+	var categoriaBase = cadete
+	method categoriaBase(_categoriaBase){
+		categoriaBase = _categoriaBase
+	}
+	method neto(){
+		return categoriaBase.neto()/2
 	}
 }
 
