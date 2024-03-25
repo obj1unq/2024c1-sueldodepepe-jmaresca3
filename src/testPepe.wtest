@@ -2,9 +2,76 @@ import pepe.*
 
 describe "Sueldo Pepe" {
 	
-	test "Test 1" {
-		//TODO: Implementame
+	test "Pepe Cadete + bonoxResultado MontoFijo + bonoxPresentismo Normal Falta 3 veces y sueldo 20800" {
+		pepe.categoria(cadete)
+		pepe.bonoResultadosEs(montoFijo)
+		pepe.bonoPresentismoEs(normal)
+		pepe.faltas(3)
+		assert.equals(20800, pepe.sueldo())
 	}
 
+	test "Pepe Gerente + bonoxResultado Porcentaje + bonoxPresentismo Nulo Sueldo debe dar $16500" {
+		pepe.categoria(gerente)
+		pepe.bonoResultadosEs(porcentaje)
+		pepe.bonoPresentismoEs(nulo)
+		assert.equals(16500, pepe.sueldo())
+	}
 	
+	test "Pepe Cadete + bonoxResultado Porcentaje + bonoxPresentismo Normal Sueldo debe dar $24000" {
+		pepe.categoria(cadete)
+		pepe.bonoResultadosEs(porcentaje)
+		pepe.bonoPresentismoEs(normal)
+		assert.equals(24000, pepe.sueldo())
+	}
+	
+	test "Pepe Cadete + bonoxResultado Porcentaje + bonoxPresentismo Normal Falta 1 vez Sueldo debe dar $23000" {
+		pepe.categoria(cadete)
+		pepe.bonoResultadosEs(porcentaje)
+		pepe.bonoPresentismoEs(normal)
+		pepe.faltas(1)
+		assert.equals(23000, pepe.sueldo())
+	}
+	
+	test "Sofia cadete con sueldo 26000" {
+		sofia.categoria(cadete)
+		assert.equals(26000, sofia.sueldo())
+	}
+	
+	test "Pepe Vendedor sin muchas ventas -> Sueldo deberia ser 16000" {
+		pepe.categoria(vendedor)
+		vendedor.desactivarAumentoPorMuchasVentas()
+		assert.equals(16000, pepe.sueldo())
+	}
+	
+	test "Pepe Vendedor con muchas ventas -> Sueldo deberia ser 20000" {
+		pepe.categoria(vendedor)
+		vendedor.activarAumentoPorMuchasVentas()
+		assert.equals(20000, pepe.sueldo())
+	}
+	
+	test "Pepe Gerente medio tiempo -> Sueldo deberia ser 7500" {
+		pepe.categoria(medioTiempo)
+		medioTiempo.categoriaBase(gerente)
+		assert.equals(7500, pepe.sueldo())
+	}
+	
+	test "Sofia cadete medio tiempo -> Sueldo deberia ser 13000" {
+		sofia.categoria(medioTiempo)
+		medioTiempo.categoriaBase(cadete)
+		assert.equals(13000, sofia.sueldo())
+	}
+	
+	test "final" {
+		medioTiempo.categoriaBase(cadete)
+		pepe.categoria(medioTiempo)
+		pepe.bonoResultadosEs(porcentaje)
+		pepe.bonoPresentismoEs(demagogico)
+		pepe.faltas(1)
+		roque.bonoResultadosEs(montoFijo)
+		ernesto.companieroEs(pepe)
+		ernesto.bonoPresentismoEs(ajuste)
+		assert.equals(11500, pepe.sueldo())
+		assert.equals(37800, roque.sueldo())
+		assert.equals(10100, ernesto.sueldo())
+	}
 }
